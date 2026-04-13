@@ -22,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.rayes.tester2.navigation.Route_Home
+import com.rayes.tester2.navigation.Route_Register
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,7 +60,7 @@ fun LogIn(navController: NavHostController) {
             title = { Text("Home") },
             navigationIcon = {
                 IconButton(onClick = {}) {
-                    Icon(imageVector = Icons.Default.Home, contentDescription = "Home Icon")
+                    Icon(Icons.Default.Home, contentDescription = "Home Icon")
                 }
             },
             actions = {
@@ -85,7 +87,7 @@ fun LogIn(navController: NavHostController) {
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            leadingIcon = { Icon(Icons.Default.Email, contentDescription = "Email Icon") },
+            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon") },
             label = { Text("Enter email", color = Color.Gray) },
             modifier = Modifier.width(300.dp)
         )
@@ -95,7 +97,7 @@ fun LogIn(navController: NavHostController) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = "Lock Feature") },
+            leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock Feature") },
             label = { Text("Enter Password", color = Color.Gray) },
             modifier = Modifier.width(300.dp)
         )
@@ -114,11 +116,20 @@ fun LogIn(navController: NavHostController) {
                 fontSize = 20.sp
             )
         }
+
+        TextButton(onClick = { navController.navigate(Route_Register) }) {
+            Text(
+                text = "Don't have an account? Click to Register",
+                color = Color.Red,
+                fontStyle = FontStyle.Italic,
+                modifier = Modifier.padding(4.dp)
+            )
+        }
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-private fun LogInPreview() {
+fun LogInPreview() {
     LogIn(rememberNavController())
 }

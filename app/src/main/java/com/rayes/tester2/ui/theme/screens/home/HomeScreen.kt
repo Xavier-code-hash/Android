@@ -51,7 +51,7 @@ fun Homescreen(navController: NavHostController) {
             title = {Text("Home")},
             navigationIcon = {
                 IconButton(onClick = {}) {
-                    Icon(imageVector = Icons.Default.Home,
+                    Icon(Icons.Default.Home,
                         contentDescription = "Home Icon")
                 }
             },

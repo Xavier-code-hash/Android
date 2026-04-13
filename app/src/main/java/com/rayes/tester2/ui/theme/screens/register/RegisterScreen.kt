@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
@@ -22,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -65,10 +67,10 @@ fun Register(navController: NavHostController) {
             },
             actions = {
                 IconButton(onClick = {}) {
-                    Icon(Icons.Default.Search, contentDescription = "Search")
+                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
                 }
                 IconButton(onClick = {}) {
-                    Icon(Icons.Default.Settings, contentDescription = "Settings")
+                    Icon(imageVector = Icons.Default.Settings, contentDescription = "Settings")
                 }
             }
         )
@@ -84,32 +86,52 @@ fun Register(navController: NavHostController) {
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
+            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon") },
             label = { Text("Enter Email") },
             modifier = Modifier.width(300.dp).padding(4.dp)
         )
 
-        Text("Phone Number", color = Color.Red, fontStyle = FontStyle.Italic)
+        Text("Phone Number",
+            color = Color.Red,
+            fontStyle = FontStyle.Italic,
+        modifier = Modifier
+            .padding(4.dp))
         OutlinedTextField(
             value = phone,
             onValueChange = { phone = it },
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Phone,
+                    contentDescription = "Phone Icon")
+            },
             label = { Text("Enter Phone Number") },
             modifier = Modifier.width(300.dp)
         )
 
-        Text("Password", color = Color.Red, fontStyle = FontStyle.Italic)
+        Text("Password",
+            color = Color.Red,
+            fontStyle = FontStyle.Italic,
+        modifier = Modifier
+            .padding(4.dp))
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+            leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock Feature") },
             label = { Text("Enter Password") },
             modifier = Modifier.width(300.dp)
         )
 
-        Text("Confirm Password", color = Color.Red, fontStyle = FontStyle.Italic)
+        Text("Confirm Password",
+            color = Color.Red,
+            fontStyle = FontStyle.Italic,
+            modifier = Modifier
+                .padding(4.dp))
         OutlinedTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Lock,
+                    contentDescription = "Lock Feature")
+            },
             label = { Text("Confirm Password") },
             modifier = Modifier.width(300.dp)
         )
@@ -124,6 +146,13 @@ fun Register(navController: NavHostController) {
         ) {
             Text("Register", fontSize = 18.sp, color = Color.Blue)
         }
+       TextButton(onClick = {navController.navigate(Route_LogIn)}) {
+           Text("Already have an account, click to LogIn",
+               color = Color.Red,
+               fontStyle = FontStyle.Italic,
+               modifier = Modifier
+                   .padding(4.dp))
+       }
     }
 }
 
