@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -115,6 +116,7 @@ fun Register(navController: NavHostController) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
+            visualTransformation = PasswordVisualTransformation(),
             leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock Feature") },
             label = { Text("Enter Password") },
             modifier = Modifier.width(300.dp)
@@ -128,6 +130,7 @@ fun Register(navController: NavHostController) {
         OutlinedTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
+            visualTransformation = PasswordVisualTransformation(),
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Lock,
                     contentDescription = "Lock Feature")
