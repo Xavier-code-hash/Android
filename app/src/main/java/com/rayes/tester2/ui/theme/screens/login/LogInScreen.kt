@@ -21,6 +21,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -35,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,7 +52,7 @@ fun LogIn(navController: NavHostController) {
     var email by remember { mutableStateOf("") }
 
     Column(
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +62,7 @@ fun LogIn(navController: NavHostController) {
             title = { Text("Home") },
             navigationIcon = {
                 IconButton(onClick = {}) {
-                    Icon(Icons.Default.Home, contentDescription = "Home Icon")
+                    Icon(imageVector = Icons.Default.Home, contentDescription = "Home Icon")
                 }
             },
             actions = {
@@ -73,23 +75,33 @@ fun LogIn(navController: NavHostController) {
             }
         )
 
+        Spacer(modifier = Modifier.height(50.dp))
+
         Text(
             text = "LogIn Screen",
             fontStyle = FontStyle.Italic,
             fontFamily = FontFamily.Cursive,
-            fontSize = 28.sp,
+            fontSize = 32.sp,
             color = Color.White,
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon") },
-            label = { Text("Enter email", color = Color.Gray) },
-            modifier = Modifier.width(300.dp)
+            label = { Text("Enter email") },
+            modifier = Modifier.width(300.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                unfocusedLabelColor = Color.Gray,
+                focusedLabelColor = Color.Green,
+                unfocusedBorderColor = Color.Gray,
+                focusedBorderColor = Color.Green
+            )
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -98,24 +110,36 @@ fun LogIn(navController: NavHostController) {
             value = password,
             onValueChange = { password = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock Feature") },
-            label = { Text("Enter Password", color = Color.Gray) },
-            modifier = Modifier.width(300.dp)
+            label = { Text("Enter Password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.width(300.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                unfocusedLabelColor = Color.Gray,
+                focusedLabelColor = Color.Green,
+                unfocusedBorderColor = Color.Gray,
+                focusedBorderColor = Color.Green
+            )
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         Button(
             onClick = { navController.navigate(Route_Home) },
-            modifier = Modifier.defaultMinSize(150.dp, 40.dp),
+            modifier = Modifier.defaultMinSize(150.dp, 45.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Green)
         ) {
             Text(
                 text = "Login",
                 fontFamily = FontFamily.Monospace,
                 color = Color.Black,
-                fontSize = 20.sp
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
             )
         }
+
+        Spacer(modifier = Modifier.height(10.dp))
 
         TextButton(onClick = { navController.navigate(Route_Register) }) {
             Text(

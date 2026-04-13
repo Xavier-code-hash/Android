@@ -1,6 +1,5 @@
 package com.rayes.tester2.ui.theme.screens.home
 
-import android.R.id.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,81 +39,80 @@ import com.rayes.tester2.ui.theme.Orange
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Homescreen(navController: NavHostController) {
-    Column(verticalArrangement = Arrangement.SpaceEvenly,
+    Column(
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .background(Orange)) {
-
-//    start of topbar
+            .background(Orange)
+    ) {
         TopAppBar(
-            title = {Text("Home")},
+            title = { Text("Home") },
             navigationIcon = {
                 IconButton(onClick = {}) {
-                    Icon(Icons.Default.Home,
-                        contentDescription = "Home Icon")
+                    Icon(Icons.Default.Home, contentDescription = "Home Icon")
                 }
             },
-
             actions = {
-                IconButton(onClick = {navController.navigate(home)}) {
-                    Icon(Icons.Default.Search,
-                        contentDescription = "Search")
+                IconButton(onClick = { }) {
+                    Icon(Icons.Default.Search, contentDescription = "Search")
                 }
                 IconButton(onClick = {}) {
-                    Icon(Icons.Default.Settings,
-                        contentDescription = "Settings")
+                    Icon(Icons.Default.Settings, contentDescription = "Settings")
                 }
             }
-
         )
-//        end of topbar
-        Spacer(modifier = Modifier
-            .height(30.dp))
-        Text("Manchester United",
-        color = Color.White,
-        fontSize = 40.sp,
-        fontStyle = FontStyle.Italic)
-        Spacer(modifier = Modifier
-            .height(48.dp))
-        Text(
-            "Welcome Ray...",
-            fontSize = 18.sp,
-            color = Orange,
-            fontFamily = FontFamily.Cursive)
 
-        Image(painter = painterResource(id = R.drawable.img1),
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Text(
+            text = "Manchester United",
+            color = Color.White,
+            fontSize = 36.sp,
+            fontStyle = FontStyle.Italic
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            text = "Welcome Ray...",
+            fontSize = 24.sp,
+            color = Color.Black,
+            fontFamily = FontFamily.Cursive
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.img1),
             contentDescription = "DesktopImage",
             modifier = Modifier
                 .width(300.dp)
-                .height(400.dp)
+                .height(300.dp)
         )
 
-        Button(onClick ={navController.navigate(Route_LogIn)},
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = { navController.navigate(Route_LogIn) },
             colors = ButtonDefaults.buttonColors(Color.Black),
-            modifier = Modifier
-            .width(300.dp)
-        ){
+            modifier = Modifier.width(300.dp)
+        ) {
             Text("LogIn", fontSize = 20.sp, fontFamily = FontFamily.SansSerif)
         }
 
-        Button(onClick = {navController.navigate(Route_Register)},
-            colors = ButtonDefaults.buttonColors(Color.Green),
-            modifier = Modifier
-                .width(300.dp)
+        Spacer(modifier = Modifier.height(10.dp))
 
-        ){
-            Text("Register")
+        Button(
+            onClick = { navController.navigate(Route_Register) },
+            colors = ButtonDefaults.buttonColors(Color.Green),
+            modifier = Modifier.width(300.dp)
+        ) {
+            Text("Register", color = Color.Black, fontSize = 20.sp)
         }
     }
-
-
-
 }
 
 @Preview(showSystemUi = true)
 @Composable
 private fun Homeprev() {
     Homescreen(rememberNavController())
-
 }
