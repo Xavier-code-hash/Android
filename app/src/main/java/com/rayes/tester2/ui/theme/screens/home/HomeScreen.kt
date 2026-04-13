@@ -1,5 +1,6 @@
 package com.rayes.tester2.ui.theme.screens.home
 
+import android.R.id.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -56,7 +57,7 @@ fun Homescreen(navController: NavHostController) {
             },
 
             actions = {
-                IconButton(onClick = {}) {
+                IconButton(onClick = {navController.navigate(home)}) {
                     Icon(Icons.Default.Search,
                         contentDescription = "Search")
                 }

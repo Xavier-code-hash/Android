@@ -1,7 +1,5 @@
 package com.rayes.tester2.ui.theme.screens.login
 
-//noinspection SuspiciousImport
-import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,11 +9,25 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,62 +41,84 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.rayes.tester2.navigation.Route_Home
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LogIn(navController: NavHostController) {
-    Column(verticalArrangement = Arrangement.Center,
+    var password by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+
+    Column(
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)) {
-        Text("LogIn Screen",
+            .background(Color.Black)
+    ) {
+        TopAppBar(
+            title = { Text("Home") },
+            navigationIcon = {
+                IconButton(onClick = {}) {
+                    Icon(imageVector = Icons.Default.Home, contentDescription = "Home Icon")
+                }
+            },
+            actions = {
+                IconButton(onClick = { }) {
+                    Icon(Icons.Default.Search, contentDescription = "Search")
+                }
+                IconButton(onClick = {}) {
+                    Icon(Icons.Default.Settings, contentDescription = "Settings")
+                }
+            }
+        )
+
+        Text(
+            text = "LogIn Screen",
             fontStyle = FontStyle.Italic,
             fontFamily = FontFamily.Cursive,
             fontSize = 28.sp,
-            fontWeight = FontWeight(600))
-        OutlinedTextField(value ="", onValueChange = {}, label = {
+            color = Color.White,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            leadingIcon = { Icon(Icons.Default.Email, contentDescription = "Email Icon") },
+            label = { Text("Enter email", color = Color.Gray) },
+            modifier = Modifier.width(300.dp)
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = "Lock Feature") },
+            label = { Text("Enter Password", color = Color.Gray) },
+            modifier = Modifier.width(300.dp)
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = { navController.navigate(Route_Home) },
+            modifier = Modifier.defaultMinSize(150.dp, 40.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Green)
+        ) {
             Text(
-                "Enter email",
-                fontSize = 18.sp,
-                fontFamily = FontFamily.Cursive,
-                color = Color.White,
-                modifier = Modifier
-                    .width(300.dp)
-            )
-        })
-        Spacer(modifier = Modifier
-            .height(20.dp))
-        OutlinedTextField(value ="", onValueChange = {}, label = {
-            Text("Enter Password",
-                fontSize = 18.sp,
-                fontWeight = FontWeight(600),
-                fontFamily = FontFamily.Cursive,
-                color = Color.White,
-                modifier = Modifier
-                    .width(300.dp)
-
-            )
-        })
-Spacer(modifier = Modifier
-    .height(20.dp))
-        Button(onClick = {navController.navigate(Route_Home)}, Modifier
-            .defaultMinSize(150.dp, 40.dp),
-        colors = ButtonDefaults.buttonColors(Color.Green)) {
-            Text("Login",
+                text = "Login",
                 fontFamily = FontFamily.Monospace,
-                color = Color.White,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .padding(5.dp)
-                )
+                color = Color.Black,
+                fontSize = 20.sp
+            )
         }
-
     }
-
 }
 
 @Preview(showSystemUi = true)
 @Composable
 private fun LogInPreview() {
     LogIn(rememberNavController())
-
 }
