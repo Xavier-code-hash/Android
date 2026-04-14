@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.rayes.tester2.R
+import com.rayes.tester2.navigation.Route_Intent
 import com.rayes.tester2.navigation.Route_LogIn
 import com.rayes.tester2.navigation.Route_Register
 import com.rayes.tester2.ui.theme.Orange
@@ -107,6 +108,16 @@ fun Homescreen(navController: NavHostController) {
             modifier = Modifier.width(300.dp)
         ) {
             Text("Register", color = Color.Black, fontSize = 20.sp)
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Button(
+            onClick = { navController.navigate(Route_Intent) },
+            colors = ButtonDefaults.buttonColors(Color.Green),
+            modifier = Modifier.width(300.dp)
+        ) {
+            Text("Intent", color = Color.Black, fontSize = 20.sp)
         }
     }
 }

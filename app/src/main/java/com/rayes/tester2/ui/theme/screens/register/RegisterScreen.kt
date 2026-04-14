@@ -3,7 +3,9 @@ package com.rayes.tester2.ui.theme.screens.register
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -18,10 +20,13 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -56,7 +61,7 @@ fun Register(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(Color(0xFFF5F5F5))
             .verticalScroll(rememberScrollState())
     ) {
         TopAppBar(
@@ -78,84 +83,110 @@ fun Register(navController: NavHostController) {
 
         Text(
             text = "Register Screen",
-            fontSize = 24.sp,
+            fontSize = 28.sp,
             fontFamily = FontFamily.Serif,
             color = Color.Black,
-            modifier = Modifier.padding(vertical = 16.dp)
+            modifier = Modifier.padding(vertical = 20.dp)
         )
 
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon") },
-            label = { Text("Enter Email") },
-            modifier = Modifier.width(300.dp).padding(4.dp)
-        )
-
-        Text("Phone Number",
-            color = Color.Red,
-            fontStyle = FontStyle.Italic,
-        modifier = Modifier
-            .padding(4.dp))
-        OutlinedTextField(
-            value = phone,
-            onValueChange = { phone = it },
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Phone,
-                    contentDescription = "Phone Icon")
-            },
-            label = { Text("Enter Phone Number") },
-            modifier = Modifier.width(300.dp)
-        )
-
-        Text("Password",
-            color = Color.Red,
-            fontStyle = FontStyle.Italic,
-        modifier = Modifier
-            .padding(4.dp))
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            visualTransformation = PasswordVisualTransformation(),
-            leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock Feature") },
-            label = { Text("Enter Password") },
-            modifier = Modifier.width(300.dp)
-        )
-
-        Text("Confirm Password",
-            color = Color.Red,
-            fontStyle = FontStyle.Italic,
+        Card(
             modifier = Modifier
-                .padding(4.dp))
-        OutlinedTextField(
-            value = confirmPassword,
-            onValueChange = { confirmPassword = it },
-            visualTransformation = PasswordVisualTransformation(),
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Lock,
-                    contentDescription = "Lock Feature")
-            },
-            label = { Text("Confirm Password") },
-            modifier = Modifier.width(300.dp)
-        )
-
-        Button(
-            onClick = { navController.navigate(Route_LogIn) },
-            modifier = Modifier
-                .padding(top = 20.dp)
-                .height(50.dp)
-                .width(300.dp),
-            colors = ButtonDefaults.buttonColors(Color.Green)
+                .padding(16.dp)
+                .fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
-            Text("Register", fontSize = 18.sp, color = Color.Blue)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
+                    label = { Text("Enter Email") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.Black,
+                        unfocusedTextColor = Color.Black,
+                        focusedBorderColor = Color.Green,
+                        unfocusedBorderColor = Color.Gray
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedTextField(
+                    value = phone,
+                    onValueChange = { phone = it },
+                    leadingIcon = { Icon(Icons.Default.Phone, contentDescription = null) },
+                    label = { Text("Phone Number") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.Black,
+                        unfocusedTextColor = Color.Black,
+                        focusedBorderColor = Color.Green,
+                        unfocusedBorderColor = Color.Gray
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    visualTransformation = PasswordVisualTransformation(),
+                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                    label = { Text("Password") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.Black,
+                        unfocusedTextColor = Color.Black,
+                        focusedBorderColor = Color.Green,
+                        unfocusedBorderColor = Color.Gray
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedTextField(
+                    value = confirmPassword,
+                    onValueChange = { confirmPassword = it },
+                    visualTransformation = PasswordVisualTransformation(),
+                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                    label = { Text("Confirm Password") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.Black,
+                        unfocusedTextColor = Color.Black,
+                        focusedBorderColor = Color.Green,
+                        unfocusedBorderColor = Color.Gray
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Button(
+                    onClick = { navController.navigate(Route_LogIn) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    colors = ButtonDefaults.buttonColors(Color.Green)
+                ) {
+                    Text("Register", fontSize = 18.sp, color = Color.Black)
+                }
+
+                TextButton(onClick = { navController.navigate(Route_LogIn) }) {
+                    Text(
+                        "Already have an account? LogIn",
+                        color = Color.Red,
+                        fontStyle = FontStyle.Italic
+                    )
+                }
+            }
         }
-       TextButton(onClick = {navController.navigate(Route_LogIn)}) {
-           Text("Already have an account, click to LogIn",
-               color = Color.Red,
-               fontStyle = FontStyle.Italic,
-               modifier = Modifier
-                   .padding(4.dp))
-       }
     }
 }
 
