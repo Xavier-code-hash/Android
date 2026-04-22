@@ -27,6 +27,10 @@ import kotlin.math.*
 fun Calculator(navController: NavHostController) {
     var display by remember { mutableStateOf("0") }
     var expression by remember { mutableStateOf("") }
+    var operand1 by remember { mutableStateOf(0.0) }
+    var activeOperator by remember { mutableStateOf("") }
+    var isNewNumber by remember { mutableStateOf(true) }
+    
     val scrollState = rememberScrollState()
 
     Scaffold(
@@ -52,7 +56,7 @@ fun Calculator(navController: NavHostController) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f),
+                    .weight(0.3f),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                 shape = RoundedCornerShape(24.dp)
             ) {
@@ -76,7 +80,7 @@ fun Calculator(navController: NavHostController) {
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
                         textAlign = TextAlign.End,
-                        maxLines = 2
+                        maxLines = 1
                     )
                 }
             }
@@ -85,27 +89,51 @@ fun Calculator(navController: NavHostController) {
 
             // Keypad
             Column(
-                modifier = Modifier.verticalScroll(scrollState),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                modifier = Modifier.weight(0.7f).verticalScroll(scrollState),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 // Scientific Row 1
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    SciButton("sin", Modifier.weight(1f)) { display = String.format(Locale.US, "%.4f", sin(display.toDoubleOrNull() ?: 0.0)) }
-                    SciButton("cos", Modifier.weight(1f)) { display = String.format(Locale.US, "%.4f", cos(display.toDoubleOrNull() ?: 0.0)) }
-                    SciButton("tan", Modifier.weight(1f)) { display = String.format(Locale.US, "%.4f", tan(display.toDoubleOrNull() ?: 0.0)) }
-                    SciButton("log", Modifier.weight(1f)) { display = String.format(Locale.US, "%.4f", log10(display.toDoubleOrNull() ?: 1.0)) }
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    SciButton("sin", Modifier.weight(1f)) { 
+                        val v = display.toDoubleOrNull() ?: 0.0
+                        display = String.format(Locale.US, "%.4f", sin(Math.toRadians(v))).removeSuffix("0").removeSuffix(".")
+                        isNewNumber = true 
+                    }
+                    SciButton("cos", Modifier.weight(1f)) { 
+                        val v = display.toDoubleOrNull() ?: 0.0
+                        display = String.format(Locale.US, "%.4f", cos(Math.toRadians(v))).removeSuffix("0").removeSuffix(".")
+                        isNewNumber = true
+                    }
+                    SciButton("tan", Modifier.weight(1f)) { 
+                        val v = display.toDoubleOrNull() ?: 0.0
+                        display = String.format(Locale.US, "%.4f", tan(Math.toRadians(v))).removeSuffix("0").removeSuffix(".")
+                        isNewNumber = true
+                    }
+                    SciButton("log", Modifier.weight(1f)) { 
+                        val v = display.toDoubleOrNull() ?: 1.0
+                        display = if (v > 0) String.format(Locale.US, "%.4f", log10(v)).removeSuffix("0").removeSuffix(".") else "Error"
+                        isNewNumber = true
+                    }
                 }
 
                 // Scientific Row 2
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    SciButton("√", Modifier.weight(1f)) { display = String.format(Locale.US, "%.4f", sqrt(display.toDoubleOrNull() ?: 0.0)) }
-                    SciButton("x²", Modifier.weight(1f)) { val d = display.toDoubleOrNull() ?: 0.0; display = (d * d).toString() }
-                    SciButton("π", Modifier.weight(1f)) { display = PI.toString() }
-                    SciButton("e", Modifier.weight(1f)) { display = E.toString() }
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    SciButton("√", Modifier.weight(1f)) { 
+                        val v = display.toDoubleOrNull() ?: 0.0
+                        display = if (v >= 0) sqrt(v).toString().removeSuffix(".0") else "Error"
+                        isNewNumber = true
+                    }
+                    SciButton("x²", Modifier.weight(1f)) { 
+                        val v = display.toDoubleOrNull() ?: 0.0
+                        display = (v * v).toString().removeSuffix(".0")
+                        isNewNumber = true
+                    }
+                    SciButton("π", Modifier.weight(1f)) { display = String.format(Locale.US, "%.4f", PI); isNewNumber = true }
+                    SciButton("e", Modifier.weight(1f)) { display = String.format(Locale.US, "%.4f", E); isNewNumber = true }
                 }
 
-                // Standard Keys
-                val gridButtons = listOf(
+                // Standard Keys Grid
+                val buttons = listOf(
                     listOf("C", "DEL", "%", "/"),
                     listOf("7", "8", "9", "*"),
                     listOf("4", "5", "6", "-"),
@@ -113,12 +141,11 @@ fun Calculator(navController: NavHostController) {
                     listOf("0", ".", "=", "")
                 )
 
-                var operand1 by remember { mutableStateOf(0.0) }
-                var activeOperator by remember { mutableStateOf("") }
-                var isNewNumber by remember { mutableStateOf(true) }
-
-                gridButtons.forEach { row ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                buttons.forEach { row ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
                         row.forEach { label ->
                             if (label.isNotEmpty()) {
                                 CalcButton(
@@ -141,10 +168,12 @@ fun Calculator(navController: NavHostController) {
                                             expression = ""
                                             operand1 = 0.0
                                             activeOperator = ""
+                                            isNewNumber = true
                                         }
                                         "DEL" -> {
-                                            if (display.length > 1) display = display.dropLast(1)
-                                            else display = "0"
+                                            if (display != "0") {
+                                                display = if (display.length > 1) display.dropLast(1) else "0"
+                                            }
                                         }
                                         in "0".."9", "." -> {
                                             if (isNewNumber) {
@@ -168,12 +197,17 @@ fun Calculator(navController: NavHostController) {
                                                 "-" -> operand1 - operand2
                                                 "*" -> operand1 * operand2
                                                 "/" -> if (operand2 != 0.0) operand1 / operand2 else Double.NaN
-                                                "%" -> operand1 % operand2
+                                                "%" -> (operand1 / 100) * operand2
                                                 else -> operand2
                                             }
                                             expression = ""
-                                            display = if (result.isNaN()) "Error" else result.toString().removeSuffix(".0")
+                                            display = when {
+                                                result.isNaN() -> "Error"
+                                                result.isInfinite() -> "Limit"
+                                                else -> result.toString().removeSuffix(".0")
+                                            }
                                             isNewNumber = true
+                                            activeOperator = ""
                                         }
                                     }
                                 }
@@ -190,17 +224,13 @@ fun Calculator(navController: NavHostController) {
 
 @Composable
 fun SciButton(label: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    Button(
+    FilledTonalButton(
         onClick = onClick,
-        modifier = modifier.height(48.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-        ),
+        modifier = modifier.height(44.dp),
         shape = RoundedCornerShape(12.dp),
         contentPadding = PaddingValues(0.dp)
     ) {
-        Text(text = label, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+        Text(text = label, fontSize = 13.sp, fontWeight = FontWeight.Bold)
     }
 }
 

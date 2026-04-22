@@ -51,16 +51,15 @@ fun AppNavHost(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     
-    // Hide bottom bar on Splash, Onboarding, and Games
-    val fullScreenRoutes = listOf(
-        Route_Splash, 
-        Route_Onboarding, 
-        Route_CandyCrush, 
-        Route_Sudoku, 
-        Route_SpaceShooter,
-        Route_MickeyAdventures
+    // Define bottom bar visibility
+    // Only show on the main landing screens
+    val mainRoutes = listOf(
+        Route_Home,
+        Route_Dashboard,
+        Route_LogIn,
+        Route_Form
     )
-    val showBottomBar = currentDestination?.route !in fullScreenRoutes
+    val showBottomBar = currentDestination?.route in mainRoutes
 
     Scaffold(
         bottomBar = {
