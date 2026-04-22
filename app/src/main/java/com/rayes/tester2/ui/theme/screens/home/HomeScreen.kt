@@ -1,123 +1,184 @@
 package com.rayes.tester2.ui.theme.screens.home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.rayes.tester2.R
-import com.rayes.tester2.navigation.Route_Intent
-import com.rayes.tester2.navigation.Route_LogIn
-import com.rayes.tester2.navigation.Route_Register
-import com.rayes.tester2.ui.theme.Orange
+import com.rayes.tester2.navigation.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Homescreen(navController: NavHostController) {
-    Column(
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Orange)
-    ) {
-        TopAppBar(
-            title = { Text("Home") },
-            navigationIcon = {
-                IconButton(onClick = {}) {
-                    Icon(Icons.Default.Home, contentDescription = "Home Icon")
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { 
+                    Text(
+                        "Discover", 
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold 
+                    ) 
+                },
+                actions = {
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Default.Notifications, contentDescription = "Notifications")
+                    }
+                    IconButton(onClick = { navController.navigate(Route_LogIn) }) {
+                        Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
+                    }
                 }
-            },
-            actions = {
-                IconButton(onClick = { }) {
-                    Icon(Icons.Default.Search, contentDescription = "Search")
-                }
-                IconButton(onClick = {}) {
-                    Icon(Icons.Default.Settings, contentDescription = "Settings")
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Hero Card
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                shape = RoundedCornerShape(24.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            ) {
+                Box {
+                    Image(
+                        painter = painterResource(id = R.drawable.img1),
+                        contentDescription = "Hero Image",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                    Surface(
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(16.dp),
+                        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text(
+                            "Welcome back, Ray",
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
                 }
             }
-        )
 
-        Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-        Text(
-            text = "Manchester United",
-            color = Color.White,
-            fontSize = 36.sp,
-            fontStyle = FontStyle.Italic
-        )
+            Text(
+                text = "Quick Actions",
+                modifier = Modifier.align(Alignment.Start),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground
+            )
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            text = "Welcome Ray...",
-            fontSize = 24.sp,
-            color = Color.Black,
-            fontFamily = FontFamily.Cursive
-        )
+            ActionRow(
+                title1 = "Dashboard",
+                icon1 = Icons.Default.Dashboard,
+                onClick1 = { navController.navigate(Route_Dashboard) },
+                title2 = "Products",
+                icon2 = Icons.Default.Storefront,
+                onClick2 = { navController.navigate(Route_Card) }
+            )
 
-        Image(
-            painter = painterResource(id = R.drawable.img1),
-            contentDescription = "DesktopImage",
-            modifier = Modifier
-                .width(300.dp)
-                .height(300.dp)
-        )
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(20.dp))
+            ActionRow(
+                title1 = "Contact Us",
+                icon1 = Icons.Default.SupportAgent,
+                onClick1 = { navController.navigate(Route_Contact) },
+                title2 = "About",
+                icon2 = Icons.Default.Info,
+                onClick2 = { navController.navigate(Route_About) }
+            )
 
-        Button(
-            onClick = { navController.navigate(Route_LogIn) },
-            colors = ButtonDefaults.buttonColors(Color.Black),
-            modifier = Modifier.width(300.dp)
-        ) {
-            Text("LogIn", fontSize = 20.sp, fontFamily = FontFamily.SansSerif)
+            Spacer(modifier = Modifier.height(32.dp))
+
+            OutlinedButton(
+                onClick = { navController.navigate(Route_Register) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(16.dp),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+            ) {
+                Icon(Icons.Default.PersonAdd, contentDescription = null)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Create New Account", fontWeight = FontWeight.SemiBold)
+            }
         }
+    }
+}
 
-        Spacer(modifier = Modifier.height(10.dp))
+@Composable
+fun ActionRow(
+    title1: String, icon1: androidx.compose.ui.graphics.vector.ImageVector, onClick1: () -> Unit,
+    title2: String, icon2: androidx.compose.ui.graphics.vector.ImageVector, onClick2: () -> Unit
+) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        ActionCard(title1, icon1, onClick1, Modifier.weight(1f))
+        Spacer(modifier = Modifier.width(16.dp))
+        ActionCard(title2, icon2, onClick2, Modifier.weight(1f))
+    }
+}
 
-        Button(
-            onClick = { navController.navigate(Route_Register) },
-            colors = ButtonDefaults.buttonColors(Color.Green),
-            modifier = Modifier.width(300.dp)
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ActionCard(title: String, icon: androidx.compose.ui.graphics.vector.ImageVector, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Card(
+        onClick = onClick,
+        modifier = modifier.height(120.dp),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)
+        )
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Text("Register", color = Color.Black, fontSize = 20.sp)
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Button(
-            onClick = { navController.navigate(Route_Intent) },
-            colors = ButtonDefaults.buttonColors(Color.Green),
-            modifier = Modifier.width(300.dp)
-        ) {
-            Text("Intent", color = Color.Black, fontSize = 20.sp)
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(32.dp)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = title, 
+                style = MaterialTheme.typography.labelLarge, 
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
         }
     }
 }

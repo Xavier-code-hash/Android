@@ -1,7 +1,19 @@
 package com.rayes.tester2.navigation
 
-const val  Route_Home = "home"
+const val Route_Home = "home"
 const val Route_LogIn = "login"
 const val Route_Register = "register"
-
 const val Route_Intent = "intent"
+const val Route_Calculator = "calculator"
+const val Route_Card = "card"
+const val Route_Splash = "splash"
+const val Route_Onboarding = "onboarding"
+const val Route_About = "about"
+const val Route_Contact = "contact"
+const val Route_Products = "products"
+const val Route_Dashboard = "dashboard"
+const val Route_Form = "form"
+const val Route_CandyCrush = "candy_crush"
+const val Route_Sudoku = "sudoku"
+const val Route_SpaceShooter = "space_shooter"
+const val Route_MickeyAdventures = "mickey_adventures"
